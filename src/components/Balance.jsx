@@ -1,13 +1,30 @@
 function Balance({ income, expenses }) {
-  const totalExpense = expenses.reduce(
-    (acc, item) => acc + item.amount,
-    0
-  );
+  const netExpense = expenses.reduce((total, e) => {
+    return e.type === "debit"
+      ? total + e.amount
+      : total - e.amount;
+  }, 0);
 
-  const balance = income - totalExpense;
+  const balance = income - netExpense;
 
   return (
-    <h2>Balance: ₹{balance}</h2>
+   <div className="balance">
+  <div className="income">
+    <h3>Income</h3>
+    <p>₹{income}</p>
+  </div>
+
+  <div className="expense">
+    <h3>Net Expense</h3>
+    <p>₹{netExpense}</p>
+  </div>
+
+  <div className="final">
+    <h3>Balance</h3>
+    <p>₹{income - netExpense}</p>
+  </div>
+</div>
+
   );
 }
 
